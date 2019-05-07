@@ -22,12 +22,29 @@ public class Customer
     @JsonIgnoreProperties({"customers", "hibernateLazyInitializer"})
     private Agent agent;
 
-    @OneToMany(mappedBy="customer")
+    @OneToMany(mappedBy="customer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @JsonIgnoreProperties({"customer", "hibernateLazyInitialiaer"})
     private List<Order> orders = new ArrayList<>();
 
     public Customer()
     {
+    }
+
+    public Customer(String custName, String custCity, String workingArea, String custCountry, String grade, double openingAmt, double receiveAmt, double paymentAmt, double outstandingAmt, String phone, Agent agent)
+    {
+        this.custName = custName;
+        this.custCity = custCity;
+        this.workingArea = workingArea;
+        this.custCountry = custCountry;
+        this.grade = grade;
+        this.openingAmt = openingAmt;
+        this.receiveAmt = receiveAmt;
+        this.paymentAmt = paymentAmt;
+        this.outstandingAmt = outstandingAmt;
+        this.phone = phone;
+        this.agent = agent;
     }
 
     public Customer(String custName, String custCity, String workingArea, String custCountry, String grade, double openingAmt, double receiveAmt, double paymentAmt, double outstandingAmt, String phone)

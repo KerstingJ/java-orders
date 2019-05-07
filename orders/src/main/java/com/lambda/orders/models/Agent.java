@@ -16,12 +16,16 @@ public class Agent
     private double commission;
     private String phone, country;
 
-    @OneToMany(mappedBy="agent")
+    @OneToMany(mappedBy="agent",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @JsonIgnoreProperties({"agent"})
     private List<Customer> customers;
 
 
-    @OneToMany(mappedBy="agent")
+    @OneToMany(mappedBy="agent",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<Order> orders;
 
     public Agent()
