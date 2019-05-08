@@ -13,19 +13,21 @@ public class Customer
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long custCode;
-    private String custName, custCity, workingArea, custCountry, grade;
+
+    @Column(unique=true)
+    private String custName;
+
+    private String custCity, workingArea, custCountry, grade;
     private double openingAmt, receiveAmt, paymentAmt, outstandingAmt;
     private String phone;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="agentCode", nullable=false)
-    @JsonIgnoreProperties({"customers", "hibernateLazyInitializer"})
+    @JsonIgnoreProperties({"customers", "orders", "hibernateLazyInitializer"})
     private Agent agent;
 
-    @OneToMany(mappedBy="customer",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    @JsonIgnoreProperties({"customer", "hibernateLazyInitialiaer"})
+    @OneToMany(mappedBy="customer")
+    @JsonIgnoreProperties({"customer", "agent", "hibernateLazyInitialiaer"})
     private List<Order> orders = new ArrayList<>();
 
     public Customer()
@@ -59,6 +61,22 @@ public class Customer
         this.paymentAmt = paymentAmt;
         this.outstandingAmt = outstandingAmt;
         this.phone = phone;
+    }
+
+    public Customer(Customer c)
+    {
+        this.custName = c.getCustName();
+        this.custCity = c.getCustCity();
+        this.workingArea = c.getWorkingArea();
+        this.custCountry = c.getCustCountry();
+        this.grade = c.getGrade();
+        this.openingAmt = c.getOpeningAmt();
+        this.receiveAmt = c.getReceiveAmt();
+        this.paymentAmt = c.getPaymentAmt();
+        this.outstandingAmt = c.getOutstandingAmt();
+        this.phone = c.getPhone();
+        this.agent = c.getAgent();
+        this.orders = c.getOrders();
     }
 
     public long getCustCode()
@@ -179,5 +197,21 @@ public class Customer
     public void setAgent(Agent agent)
     {
         this.agent = agent;
+    }
+
+    public List<Order> getOrders()
+    {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders)
+    {
+        this.orders = orders;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Customer{" + "custCode=" + custCode + ", custName='" + custName + '\'' + ", custCity='" + custCity + '\'' + ", workingArea='" + workingArea + '\'' + ", custCountry='" + custCountry + '\'' + ", grade='" + grade + '\'' + ", openingAmt=" + openingAmt + ", receiveAmt=" + receiveAmt + ", paymentAmt=" + paymentAmt + ", outstandingAmt=" + outstandingAmt + ", phone='" + phone + '\'' + '}';
     }
 }

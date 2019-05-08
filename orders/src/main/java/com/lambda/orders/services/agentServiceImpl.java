@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
 @Service(value="agentService")
-public class agentServiceImpl implements agentService
+public class agentServiceImpl implements AgentService
 {
     @Autowired
     private AgentDao agentDao;
@@ -24,9 +25,12 @@ public class agentServiceImpl implements agentService
     }
 
     @Override
-    public List<Agent> findAll()
+    public ArrayList<Agent> findAll()
     {
-        return null;
+        ArrayList<Agent> agents = new ArrayList<>();
+        agentDao.findAll().iterator().forEachRemaining(a -> agents.add(a));
+
+        return agents;
     }
 
     @Override

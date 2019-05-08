@@ -4,17 +4,17 @@ import com.lambda.orders.models.Agent;
 import com.lambda.orders.models.Customer;
 import com.lambda.orders.models.Order;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public interface orderService
+public interface OrderService
 {
     //Create
     Customer save(Order order);
 
     // Read
-    List<Order> findAll();
-    List<Order> findAllByAgent(Agent agent);
-    List<Order> findAllByCustomer(Customer customer);
+    ArrayList<Order> findAll();
+    ArrayList<Order> findAllByAgent(Agent agent);
+    ArrayList<Order> findAllByCustomer(Customer customer);
 
     // Update
     Customer update(Order order, long ordCode);
